@@ -1,32 +1,26 @@
 # 耿同学 Skill：学术论文打假检测器
 
-一个 [Claude Code](https://claude.ai/claude-code) Skill，用 AI 辅助检测学术论文中的数据造假、图片复用、统计异常等学术不端行为。
+一个 AI Agent Skill，用 AI 辅助检测学术论文中的数据造假、图片复用、统计异常等学术不端行为。
 
 灵感来源于 B 站 UP 主耿同学讲故事，他在 36 天内揭露了同济、南开、中山、上海大学 4 所高校的 5 位杰青学术造假，被网友称为"学术圈海瑞"。
 
 ## 安装
 
 ```bash
-claude skills add https://github.com/xiaomaomaoxiong/geng-academic-fraud-detector
+npx skills add https://github.com/wooly99/geng-academic-fraud-detector
 ```
 
-安装后 Skill 会被添加到你的 `.claude/skills/` 目录中。
+安装后 Skill 会被添加到你的 Agent skills 目录中。
 
 ## 使用方式
 
-安装后，在 Claude Code 对话中直接说：
+安装后，在 AI Agent 对话中直接说：
 
 ```
 帮我打假这篇论文 /path/to/paper.pdf
 ```
 
-或通过斜杠命令调用：
-
-```
-/geng-academic-fraud-detector paper.pdf
-```
-
-Claude 会读取论文 PDF，按照"耿同学六式"逐一检测，最终输出一份结构化的打假报告。
+Agent 会读取论文 PDF，按照"耿同学六式"逐一检测，最终输出一份结构化的打假报告。
 
 ## 检测维度（耿同学六式）
 
