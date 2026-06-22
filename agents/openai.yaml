@@ -1,0 +1,4 @@
+interface:
+  display_name: "耿同学学术诚信初筛"
+  short_description: "循证初筛论文图像、数据、统计、方法和撤稿高风险线索"
+  default_prompt: "Use $geng-academic-fraud-detector to review this paper for evidence-graded image, data, statistics, and methods red flags."
