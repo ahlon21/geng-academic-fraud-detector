@@ -1,0 +1,5 @@
+group,mean,sd,n
+Control,4.50,2.22,10
+LowDose,3.83,1.72,6
+MidDose,4.33,2.42,6
+HighDose,5.17,2.14,6

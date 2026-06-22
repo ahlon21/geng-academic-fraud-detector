@@ -1,0 +1,4 @@
+group,mean,sd,n
+Control,4.00,0.30,3
+Model,3.80,0.84,5
+Treated,3.45,1.12,20

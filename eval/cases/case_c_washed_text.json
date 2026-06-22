@@ -1,0 +1,18 @@
+{
+  "id": "washed_text",
+  "title": "含 tortured phrases 洗稿 + 未披露 AI 代写残留的方法段",
+  "axis": "text-integrity (第五/六式)",
+  "material": "请用本技能分析以下论文方法段文本。\n\n\"2. Methods. We trained a counterfeit consciousness classifier on a colossal information corpus. Highlight extraction used a profound learning encoder, and the flag to commotion proportion was optimized over the informational index. As an AI language model, I cannot access the raw clinical records, but the proposed bolster vector machine achieved strong accuracy on breast cancer (bosom peril) detection. Certainly, here is a possible discussion of the limits.\"\n\n请判断文本诚信问题，并给出结构化打假报告。",
+  "ground_truth": "文本含多处折磨型短语（counterfeit consciousness=AI、colossal information=big data、informational index=dataset、flag to commotion=signal-to-noise、bolster vector machine=SVM、bosom peril=breast cancer）以及聊天机器人残留（'As an AI language model, I cannot…'、'Certainly, here is a possible…'）。合格报告应同时点出洗稿与 AI 残留，引用 tortured/aitext 检测，并保持伦理克制措辞。",
+  "checks": [
+    {"kind": "contains_any", "values": ["tortured", "折磨型", "洗稿", "counterfeit consciousness", "informational index", "bosom peril"], "weight": 2.0, "desc": "识别 tortured phrases 洗稿"},
+    {"kind": "contains_any", "values": ["as an ai language model", "AI 代写", "未披露", "language model", "聊天机器人", "残留"], "weight": 2.0, "desc": "识别未披露 AI 代写残留"},
+    {"kind": "contains_any", "values": ["tortured", "aitext", "forensics.py"], "weight": 1.0, "desc": "引用 tortured/aitext 检测"},
+    {"kind": "verdict_in", "allowed": ["red", "orange", "yellow"], "weight": 1.0, "desc": "判定存在文本诚信问题（非清白）"},
+    {"kind": "section_present", "value": "综合评定", "weight": 1.0, "desc": "含综合评定小节"}
+  ],
+  "tool_oracle": [
+    {"cmd": ["python3", "scripts/forensics.py", "tortured", "--file", "{REPO}/eval/cases/data/case_c_text.txt"], "expect_exit": 2, "desc": "tortured 命中（退出码2）"},
+    {"cmd": ["python3", "scripts/forensics.py", "aitext", "--file", "{REPO}/eval/cases/data/case_c_text.txt"], "expect_exit": 2, "desc": "aitext 命中（退出码2）"}
+  ]
+}

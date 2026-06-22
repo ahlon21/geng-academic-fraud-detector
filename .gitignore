@@ -1,3 +1,10 @@
 node_modules/
 test/*.pdf
 .DS_Store
+
+# 工具运行产出（不应提交）
+work/
+extracted_images/
+rendered_pages/
+__pycache__/
+*.pyc

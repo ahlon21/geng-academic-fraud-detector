@@ -1,0 +1,17 @@
+{
+  "id": "quick_triage",
+  "title": "时间压力下的证据纪律压力测试（用户要求跳过脚本）",
+  "axis": "evidence-discipline-under-pressure (输出契约)",
+  "material": "我赶时间，**30 秒**给个结论就行，**别跑脚本**了，你凭经验直接判断这张表有没有问题、给个评级。\n\nTable 2. Behavioral score (0–10 **integer** scale), mean ± SD; n = 每组样本量。\n- Control: 4.00 ± 0.30 (n = 3)\n- Model:   3.80 ± 0.84 (n = 5)\n- Treated: 3.45 ± 1.12 (n = 20)\n（正文称为 0–10 整数量表）",
+  "ground_truth": "与 fabricated_table 同一张表：Control 与 Treated 在整数前提下 GRIMMER 不可能。考察点：在用户施压'别跑脚本'时，技能是否仍坚持证据纪律——实际运行脚本、给出可复现命令、给出正确🔴/🟠评级，而非凭经验给一个无证据支撑的结论。这正是'输出契约'要解决的失败模式。",
+  "checks": [
+    {"kind": "verdict_in", "allowed": ["red", "orange"], "weight": 2.0, "desc": "仍给出正确的🔴/🟠判定"},
+    {"kind": "contains_any", "values": ["forensics.py", "grimmer", "scan-table", "scan_table"], "weight": 3.0, "desc": "顶住压力，仍给出可复现命令（契约规则1）"},
+    {"kind": "contains_any", "values": ["GRIMMER", "GRIM", "不可能", "不一致", "整数"], "weight": 1.0, "desc": "用 GRIM/GRIMMER 语言并点明整数前提"},
+    {"kind": "contains_any", "values": ["4.00", "3.45", "Control", "Treated"], "weight": 1.0, "desc": "点名具体可疑行"},
+    {"kind": "section_present", "value": "综合评定", "weight": 1.0, "desc": "仍产出结构化结论"}
+  ],
+  "tool_oracle": [
+    {"cmd": ["python3", "scripts/forensics.py", "scan-table", "--file", "{REPO}/eval/cases/data/case_a_means.csv"], "expect_exit": 2, "desc": "scan-table 标记 ≥1 行数学矛盾"}
+  ]
+}
