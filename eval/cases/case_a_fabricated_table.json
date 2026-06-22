@@ -1,0 +1,18 @@
+{
+  "id": "fabricated_table",
+  "title": "整数评分表中植入 GRIMMER 不可能的均值±SD",
+  "axis": "catch-real-fraud (第二/四式)",
+  "material": "请用本技能分析以下论文结果片段。\n\nTable 2. Behavioral score (0–10 **integer** scale), reported as mean ± SD; n = 每组样本量。\n- Control: 4.00 ± 0.30 (n = 3)\n- Model:   3.80 ± 0.84 (n = 5)\n- Treated: 3.45 ± 1.12 (n = 20)\n\n正文称该评分为 0–10 的整数量表，三组为独立动物实验。请判断是否存在数据造假，并给出结构化打假报告。",
+  "ground_truth": "Control(4.00±0.30,n=3) 与 Treated(3.45±1.12,n=20) 对整数数据在数学上不可能（GRIMMER 不一致）；Model(3.80±0.84,n=5) 是自洽的。合格报告应判定数据造假为🔴/🟠，点名不可能的行，并给出可复现的 grimmer/scan-table 命令；不得把整表判为清白。",
+  "checks": [
+    {"kind": "verdict_in", "allowed": ["red", "orange"], "weight": 2.0, "desc": "总体判定为🔴/🟠（抓到造假）"},
+    {"kind": "contains_any", "values": ["grimmer", "scan-table", "scan_table", "forensics.py"], "weight": 2.0, "desc": "引用可复现的 GRIMMER/scan-table 命令"},
+    {"kind": "contains_any", "values": ["数学上不可能", "不可能", "不一致", "impossible", "GRIMMER", "GRIM"], "weight": 1.0, "desc": "用 GRIM/GRIMMER 语言解释为何是硬证据"},
+    {"kind": "contains_any", "values": ["4.00", "3.45", "Control", "Treated"], "weight": 1.0, "desc": "点名具体不可能的行"},
+    {"kind": "verdict_in", "allowed": ["clean"], "weight": 0.0, "desc": "(信息) 是否误判清白"},
+    {"kind": "section_present", "value": "综合评定", "weight": 1.0, "desc": "含综合评定小节"}
+  ],
+  "tool_oracle": [
+    {"cmd": ["python3", "scripts/forensics.py", "scan-table", "--file", "{REPO}/eval/cases/data/case_a_means.csv"], "expect_exit": 2, "desc": "scan-table 标记 ≥1 行数学矛盾"}
+  ]
+}

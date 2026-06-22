@@ -1,0 +1,17 @@
+{
+  "id": "clean_control",
+  "title": "完全自洽的整数表 + 合规数字（假阳性纪律测试）",
+  "axis": "avoid-false-positive (纪律)",
+  "material": "请用本技能分析以下论文结果片段。\n\nTable 1. Cell count (integer), mean ± SD; n = 每组样本量。\n- Control:  4.50 ± 2.22 (n = 10)\n- LowDose:  3.83 ± 1.72 (n = 6)\n- MidDose:  4.33 ± 2.42 (n = 6)\n- HighDose: 5.17 ± 2.14 (n = 6)\n\n附录另给出一批跨数量级的测量值（见 case_b_numbers.txt）。请判断是否存在数据造假，并给出结构化打假报告。注意：不要为了出结论而过度解读。",
+  "ground_truth": "本案例不含可检测的数据造假：所有 (mean,sd,n) 均 GRIMMER 自洽，附录数字符合 Benford。合格报告应在**实际运行过工具**后判为 ✅ 清白或至多 🟡 存疑，绝不能凭空捏造 🔴 实锤。考察的是假阳性纪律。",
+  "checks": [
+    {"kind": "verdict_in", "allowed": ["clean", "yellow"], "weight": 3.0, "desc": "总体判定为✅/🟡（未过度断言）"},
+    {"kind": "contains_any", "values": ["forensics.py", "scan-table", "scan_table", "grimmer", "benford", "grim"], "weight": 2.0, "desc": "确实运行过统计工具（非肉眼猜）"},
+    {"kind": "contains_any", "values": ["未发现", "一致", "通过", "无异常", "consistent", "自洽", "未触发"], "weight": 1.0, "desc": "如实陈述工具结果为阴性"},
+    {"kind": "section_present", "value": "综合评定", "weight": 1.0, "desc": "含综合评定小节"}
+  ],
+  "tool_oracle": [
+    {"cmd": ["python3", "scripts/forensics.py", "scan-table", "--file", "{REPO}/eval/cases/data/case_b_means.csv"], "expect_exit": 0, "desc": "scan-table 无矛盾（退出码0）"},
+    {"cmd": ["python3", "scripts/forensics.py", "benford", "--file", "{REPO}/eval/cases/data/case_b_numbers.txt"], "expect_exit": 0, "desc": "Benford 符合（退出码0）"}
+  ]
+}
